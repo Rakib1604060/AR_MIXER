@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1057918192653",
+    "firebase_url": "https://arzoo-c2f52.firebaseio.com",
+    "project_id": "arzoo-c2f52",
+    "storage_bucket": "arzoo-c2f52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057918192653:android:e92f50483aa204f2cc9944",
+        "android_client_info": {
+          "package_name": "com.ARcadeStudio.ARMIXER"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057918192653-v2prgcfpbnjbqn87ivk7cjn6v7vmo4pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3ffQdjR2O7Oc3IDL9gdl9oEd5m5HgHLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057918192653-v2prgcfpbnjbqn87ivk7cjn6v7vmo4pt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
