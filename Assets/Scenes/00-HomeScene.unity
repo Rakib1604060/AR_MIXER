@@ -1364,9 +1364,15 @@ MonoBehaviour:
   soundButton: {fileID: 136900385}
   testButton: {fileID: 458786571}
   backgruondmusic: {fileID: 1107731446}
-  welcometext: {fileID: 0}
-  logoutbtn: {fileID: 0}
-  alertdialog: {fileID: 0}
+  welcometext: {fileID: 23898911}
+  logoutbtn: {fileID: 854856236}
+  alertdialog: {fileID: 1676490121}
+--- !u!1 &1676490121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3548272596780065684, guid: 065f5321bc1a89b419fc880515cc8e62,
+    type: 3}
+  m_PrefabInstance: {fileID: 392009773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1710636847
 GameObject:
   m_ObjectHideFlags: 0

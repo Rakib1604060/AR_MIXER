@@ -10,31 +10,32 @@ using UnityEngine.SceneManagement;
 
 
 
-public class LoadAnimals : MonoBehaviour
+public class LoadCatlog : MonoBehaviour
 {
     public GameObject prefab;
     DatabaseReference reference;
     public Button backButton;
 
-    List<Animal> animalList = new List<Animal>();
-
 
     void Start()
     {
+        String catalogname = PlayerPrefs.GetString("TYPEOFDATA","Animals");
+
+
+
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://arzoo-c2f52.firebaseio.com/");
         backButton.onClick.AddListener(() => { SceneManager.LoadScene(0); });
         //load Animals name from FIREBASE REALTIME DB
-        LoadData();
+        LoadData(catalogname);
     }
 
 
 
-    private void LoadData()
+    private void LoadData(String type)
     {
 
-        reference = FirebaseDatabase.DefaultInstance.GetReference("Animals");
+        reference = FirebaseDatabase.DefaultInstance.GetReference(type);
         reference.KeepSynced(true);
-        
         reference
        .ValueChanged += (object sender2, ValueChangedEventArgs e2) =>
         {
@@ -63,9 +64,8 @@ public class LoadAnimals : MonoBehaviour
                         button.GetComponent<Button>().onClick.AddListener(()=> {
 
                           PlayerPrefs.SetString("CURRENTMODELNAME",name);
-                           PlayerPrefs.SetString("CURRENTMODELSIZE",size);
-
-                           SceneManager.LoadScene(4);
+                          PlayerPrefs.SetString("CURRENTMODELSIZE",size);
+                          SceneManager.LoadScene(4);
 
                         });
 
@@ -80,9 +80,5 @@ public class LoadAnimals : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }

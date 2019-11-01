@@ -30,12 +30,12 @@ public class HomeScript : MonoBehaviour
         user = auth.CurrentUser;
         if (user == null)
         {
-           
+       
             SceneManager.LoadScene(1);
         }
         else
         {
-            welcometext.text = "Welcome " + PlayerPrefs.GetString("USERNAME",null);
+            welcometext.text = "Welcome " + user.Email;
         }
 
      
@@ -48,18 +48,19 @@ public class HomeScript : MonoBehaviour
 
         });
         animalButton.onClick.AddListener(() =>{
-
+            PlayerPrefs.SetString("TYPEOFDATA", "Animals");
             SceneManager.LoadScene(2);
 
 
         });
         digitButton.onClick.AddListener(() => {
-
+            PlayerPrefs.SetString("TYPEOFDATA","Digit");
+            SceneManager.LoadScene(2);
 
 
         });
 
-        animalButton.onClick.AddListener(() => {
+        logoutbtn.onClick.AddListener(() => {
 
             Logoutnow();
 
@@ -67,8 +68,9 @@ public class HomeScript : MonoBehaviour
         });
 
         alphabetButton.onClick.AddListener(() => {
+            PlayerPrefs.SetString("TYPEOFDATA", "Alphabet");
+            SceneManager.LoadScene(2);
 
-            
 
         });
         exitButton.onClick.AddListener(() => {
