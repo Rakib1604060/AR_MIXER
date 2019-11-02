@@ -51,7 +51,7 @@ public class LoadCatlog : MonoBehaviour
                     {
 
                         GameObject button = Instantiate(prefab,transform) as GameObject;
-                       
+                        string model = childSnapshot.Child("model").Value.ToString();
                         string size= childSnapshot.Child("size").Value.ToString();
                         string name= childSnapshot.Child("name").Value.ToString();
 
@@ -65,6 +65,7 @@ public class LoadCatlog : MonoBehaviour
 
                           PlayerPrefs.SetString("CURRENTMODELNAME",name);
                           PlayerPrefs.SetString("CURRENTMODELSIZE",size);
+                          PlayerPrefs.SetString("CURRENTMODELURL", model);
                           SceneManager.LoadScene(4);
 
                         });

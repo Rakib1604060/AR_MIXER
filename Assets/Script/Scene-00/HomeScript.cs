@@ -35,7 +35,7 @@ public class HomeScript : MonoBehaviour
         }
         else
         {
-            welcometext.text = "Welcome " + user.Email;
+            welcometext.text = "Welcome " + user.Email.ToString();
         }
 
      

@@ -24,7 +24,6 @@ public class ModelDownloader : MonoBehaviour
     void Start()
     {
 
-        DownloadingText.text = "START Called";
 
         string modelname = PlayerPrefs.GetString("CURRENTMODELNAME");
         url = url + "/" + modelname;

@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
 using System;
+using UnityEngine.UI;
+using UnityEngine.Networking;
+
 
 public class ModelController: MonoBehaviour
 {
     private DetectedPlane detectedPlane;
     private GameObject modelPrefab;
     private GameObject modelInstance;
+    public GameObject tempmodel;
     public GameObject pointer;
     public Camera firstPersonCamera;
-    public ModelDownloader downloader;
+    //public ModelDownloader downloader;
+    private string modelurl;
 
-   
+    public Text DownloadingText;
+
+
+
     // Speed to move.
     public float speed = 20f;
 
@@ -22,52 +30,98 @@ public class ModelController: MonoBehaviour
         detectedPlane = plane;
         // Spawn a new snake.
          SpawnModel();
+
     }
 
 
 
     private void SpawnModel()
     {
-       string filepath=  downloader.downloadFileNow();
-        if (System.IO.File.Exists(filepath))
-        {
-            string name = PlayerPrefs.GetString("CURRENTMODELNAME");
-            var myLoadedAssetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(filepath, name));
-            if (myLoadedAssetBundle == null)
-            {
-                return;
-            }
-            modelPrefab = myLoadedAssetBundle.LoadAsset<GameObject>(name);
-
-
-        }
-        else
-        {
-            return;
-        }
-
-       
         if (modelInstance != null)
         {
             DestroyImmediate(modelInstance);
         }
 
+        DownloadingText.text = "SPAWN Called";
+
         Vector3 pos = detectedPlane.CenterPose.position;
 
         // Not anchored, it is rigidbody that is influenced by the physics engine.
-        modelInstance = Instantiate(modelPrefab, pos,
+        modelInstance = Instantiate(tempmodel, pos,
                 Quaternion.identity, transform);
 
         // Pass the head to the slithering component to make movement work.
         GetComponent<Slithering>().Head = modelInstance.transform;
+
+
     }
 
     void Start()
     {
-        
+
+        DownloadingText.text = "START Called";
+        modelurl = PlayerPrefs.GetString("CURRENTMODELURL", null);
+        if (modelurl != null)
+        {
+            DownloadingText.text = modelurl;
+            StartCoroutine(GetAssetBundle());
+        }
+
+
+
     }
 
-  
+    /* IEnumerator GetAssetBundle()
+      {
+          UnityWebRequest www = new UnityWebRequest(modelurl);
+          DownloadHandlerAssetBundle handler = new DownloadHandlerAssetBundle(www.url,uint.MaxValue);
+          www.downloadHandler = handler;
+
+          yield return www.SendWebRequest();
+
+          if (www.isNetworkError || www.isHttpError)
+          {
+              Debug.Log(www.error);
+              DownloadingText.text =www.error;
+          }
+          else
+          {
+              // Extracts AssetBundle
+              AssetBundle bundle = handler.assetBundle;
+              string name = PlayerPrefs.GetString("CURRENTMODELNAME");
+              modelPrefab = bundle.LoadAsset<GameObject>(name);
+
+              DownloadingText.text = "Download SUccess";
+
+
+
+
+          }
+
+
+      }
+      */
+    IEnumerator GetAssetBundle()
+    {
+        UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(modelurl);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+            DownloadingText.text = www.error;
+
+        }
+        else
+        {
+            DownloadingText.text ="SUCCESS FULL DOWNLOAD";
+            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
+            string name = PlayerPrefs.GetString("CURRENTMODELNAME");
+            modelPrefab = bundle.LoadAsset<GameObject>(name);
+        }
+    }
+
+
     void Update()
     {
         if (modelInstance == null || modelInstance.activeSelf == false)
